@@ -9,6 +9,7 @@ public partial class MainPage : ContentPage
 
     async void OnCounterClicked(object sender, EventArgs e)
     {
+        MainActivity.TCS = new TaskCompletionSource();
         try
         {
             WebAuthenticatorResult authResult = await WebAuthenticator.Default.AuthenticateAsync(
@@ -20,8 +21,7 @@ public partial class MainPage : ContentPage
         {
 
         }
-
-        //this throws exception
+        await MainActivity.TCS.Task;
         Application.Current.MainPage = new DifferentPage();
     }
 }
